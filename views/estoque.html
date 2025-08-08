@@ -5,11 +5,8 @@
     <div class="col-md-4">
         <form action="{{url_for('estoque')}}" method="POST">
             <input type="text" name="titulo" placeholder="Título" class="form-control" required>
-            <input type="number" name="ano" placeholder="Ano" class="form-control" required>
             <input type="text" name="categoria" placeholder="Categoria" class="form-control" required>
-            <input type="text" name="plataforma" placeholder="Plataforma" class="form-control" required>
-            <input type="number" name="preco" placeholder="Preço" class="form-control" required>
-            <input type="number" name="quantidade" placeholder="Quantidade" class="form-control" required>
+            <input type="text" name="imagem" placeholder="URL da imagem" class="form-control" required>
             <input type="submit" value="Cadastrar" class="btn btn-success">
             <input type="reset" value="limpar" class="btn btn-danger">
         </form>
@@ -23,11 +20,8 @@
   <thead class="table-dark">
     <tr>
       <th>Título</th>
-      <th>Ano</th>
-      <th>Categora</th>
-      <th>Plataforma</th>
-      <th>Preço</th>
-      <th>Quantidade</th>
+      <th>Categoria</th>
+      <th>Imagem</th>
     </tr>
   </thead>
 
@@ -36,11 +30,8 @@
 
     <tr>
       <td>{{game.titulo}}</td>
-      <td>{{game.ano}}</td>
       <td>{{game.categoria}}</td>
-      <td>{{game.plataforma}}</td>
-      <td>{{game.preco}}</td>
-      <td>{{game.quantidade}}</td>
+      <td><img src="{{game.imagem}}" alt="{{game.titulo}}" width="100"></td>
     </tr>
 
     {% endfor %}

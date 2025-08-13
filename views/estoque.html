@@ -26,12 +26,12 @@
   </thead>
 
   <tbody>
-    {% for game in gamesestoque %}
+    {% for presente in presenteestoque %}
 
     <tr>
-      <td>{{game.titulo}}</td>
-      <td>{{game.categoria}}</td>
-      <td><img src="{{game.imagem}}" alt="{{game.titulo}}" width="100"></td>
+      <td>{{presente.titulo}}</td>
+      <td>{{presente.categoria}}</td>
+      <td><img src="{{presente.imagem}}" alt="{{presente.titulo}}" width="100"></td>
     </tr>
 
     {% endfor %}

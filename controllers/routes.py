@@ -1,34 +1,20 @@
 from flask import render_template, request, redirect, url_for
 # Importando o Model
 from models.database import db, Presente
-
-jogadores = []
-
-gamelist = [{'titulo': 'CS-GO',
-             'ano': 2012,
-             'categoria': 'FPS Online'}]
   
 def init_app(app):
     @app.route('/')
     def home():
         return render_template('presentes.html')
 
-    @app.route('/games', methods=['GET', 'POST'])
-    def games():
-        game = gamelist[0]
-        if request.method == 'POST':
-            if request.form.get('jogador'):
-                jogadores.append(request.form.get('jogador'))
-                return redirect(url_for('games'))
-        return render_template('games.html', game=game, jogadores=jogadores)
     
-    @app.route('/cadgames', methods=['GET', 'POST'])
-    def cadgames():
+    @app.route('/cadpresentes', methods=['GET', 'POST'])
+    def cadpresentes():
         if request.method == 'POST':
             form_data = request.form.to_dict()
-            gamelist.append(form_data)
-            return redirect(url_for('cadgames'))
-        return render_template('cadgames.html', gamelist=gamelist)
+            presentelist.append(form_data)
+            return redirect(url_for('cadpresentes'))
+        return render_template('cadpresentes.html', presentelist=presentelist)
     
     # API de presentes usando banco SQLite
     @app.route('/presentes', methods=['GET', 'POST'])
@@ -37,12 +23,14 @@ def init_app(app):
         if id:
             presente = Presente.query.get(id)
             if presente:
-                return render_template('gameinfo.html', ginfo=presente)
+                return render_template('gameinfo.html', pinfo=pinfo)
             else:
                 return f'Presente com a ID {id} não foi encontrado.'
         else:
             presentes = Presente.query.all()
-            return render_template('presentes.html', gamesjson=presentes)
+            return render_template('presentes.html', presentes=presentes)
+
+            
     
     # Rota com CRUD de presentes
     @app.route('/estoque', methods=['GET', 'POST'])

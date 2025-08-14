@@ -20,10 +20,19 @@ def init_app(app):
     @app.route('/presentes', methods=['GET', 'POST'])
     @app.route('/presentes/<int:id>', methods=['GET', 'POST'])
     def apipresentes(id=None):
+        if request.method == 'POST':
+            if 'presente_id' in request.form:
+                presente_id = int(request.form['presente_id'])
+                presente = Presente.query.get_or_404(presente_id)
+                if not presente.escolhido:
+                    presente.escolhido = True
+                    db.session.commit()
+            return redirect(url_for('apipresentes'))
+
         if id:
             presente = Presente.query.get(id)
             if presente:
-                return render_template('gameinfo.html', pinfo=pinfo)
+                return render_template('gameinfo.html', pinfo=presente)
             else:
                 return f'Presente com a ID {id} não foi encontrado.'
         else:
@@ -36,7 +45,16 @@ def init_app(app):
     @app.route('/estoque', methods=['GET', 'POST'])
     def estoque():
         if request.method == 'POST':
-            # Cadastra um novo presente 
+            # Clique no botão de escolher presente
+            if 'presente_id' in request.form:
+                presente_id = int(request.form['presente_id'])
+                presente = Presente.query.get_or_404(presente_id)
+                if not presente.escolhido:
+                    presente.escolhido = True
+                    db.session.commit()
+                return redirect(url_for('estoque'))
+
+            # Cadastro de novo presente
             newpresente = Presente(
                 request.form['titulo'],
                 request.form['categoria'],
@@ -45,7 +63,8 @@ def init_app(app):
             db.session.add(newpresente)
             db.session.commit()
             return redirect(url_for('estoque'))
-        
-        # Listar todos os presentes
+
         presenteestoque = Presente.query.all()
         return render_template('estoque.html', presenteestoque=presenteestoque)
+
+

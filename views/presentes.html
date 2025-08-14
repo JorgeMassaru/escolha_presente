@@ -1,22 +1,30 @@
-{% extends 'base.html '%}
+{% extends 'base.html' %}
+{% block content %}
 
-{% block content%}
+<div class="container" style="background-color: white; border-radius: 8px;">
+    <div class="row">
+        {% for presente in presentes %}
+        <div class="col-md-3 m-auto">
+            <div class="card" style="width: 16rem;">
+                <img src="{{ presente.imagem }}" alt="{{ presente.titulo }}" class="card-img-top" style="height: 150px; object-fit: cover;">
+                <div class="card-body">
+                    <h5>{{ presente.titulo }}</h5>
+                    <h6>{{ presente.categoria }}</h6>
 
-    <div class="container" style="background-color: white; border-radius: 8px;">
-        <div class="row">
-            {% for presente in presentes %}
-            <div class="col-md-3 m-auto">
-                <div class="card" style="width: 16rem;">
-      <img src="{{presente.imagem}}" alt="{{presente.titulo}}" width="100">
-                    <div class="card-body">
-                        <h5> {{presente.titulo}} </h5>
-                        <h5> {{presente.categoria}} </h5>
-                        <a href="{{url_for('apipresentes', id=presente.id)}}" class="btn btn-dark">  </a>
-                    </div>
+                    <form method="POST" action="{{ url_for('apipresentes') }}">
+                        <input type="hidden" name="presente_id" value="{{ presente.id }}">
+                        <button type="submit"
+                                {% if presente.escolhido %} disabled style="background-color: gray; cursor: not-allowed;" {% endif %}
+                                class="btn btn-dark w-100">
+                            {% if presente.escolhido %} Já escolhido {% else %} Quero esse presente {% endif %}
+                        </button>
+                    </form>
+
                 </div>
             </div>
-            {% endfor %}
         </div>
+        {% endfor %}
     </div>
+</div>
 
 {% endblock content %}

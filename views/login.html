@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+
+ <h2> Cadastro de usuário/h2>
+    <form action="{{url_for('login')}}" method="POST">
+        <label> Usuário: </label>
+        <input type="text" name="username" required>
+        <label> Senha: </label>
+        <input type="text" name="password" required>
+        <input type="submit" value="Login">
+    </form>
+    <hr>
+
+{% endblock content %}
